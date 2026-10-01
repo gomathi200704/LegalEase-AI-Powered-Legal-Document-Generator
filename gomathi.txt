@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LegalEase</title>
+</head>
+<body>
+  <h2>LegalEase - AI Legal Document Generator</h2>
+
+  <select id="type">
+    <option>Rental Agreement</option>
+    <option>NDA</option>
+    <option>Legal Notice</option>
+  </select>
+
+  <textarea id="details"
+    placeholder="Enter document details"></textarea>
+
+  <button onclick="generate()">Generate</button>
+
+  <pre id="result"></pre>
+
+  <script>
+    async function generate() {
+      const response = await fetch("http://localhost:5000/generate", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          type: document.getElementById("type").value,
+          details: document.getElementById("details").value
+        })
+      });
+
+      const data = await response.json();
+      document.getElementById("result").textContent = data.document;
+    }
+  </script>
+</body>
+</html>
